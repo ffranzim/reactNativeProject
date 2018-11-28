@@ -7,43 +7,38 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Platform, StyleSheet, Image, Dimensions, ScrollView, Text, View } from 'react-native';
 
 const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+  ios: 'IOS',
+  android: 'Android'
 });
 
 type Props = {};
+
+const width = Dimensions.get('screen').width;
+const height = Dimensions.get('screen').height;
+
 export default class App extends Component<Props> {
   render() {
+    const fotos = [
+      { id: 1, usuario: 'rafael' },
+      { id: 2, usuario: 'pedro' },
+      { id: 3, usuario: 'alberto' }];
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Olá enfermeira! Welcome to React Native2!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <FlatList
+        style={{ marginTop: 20 }}
+        data={fotos}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) =>
+          <View>
+            <Text>{item.usuario}</Text>
+            <Image source={require('./resources/img/alura.jpg')}
+              style={{ width: width, height: width }} />
+          </View>
+        }
+      />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
